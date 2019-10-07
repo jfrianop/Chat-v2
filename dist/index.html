@@ -8,53 +8,73 @@
 </head>
 
 <body>
+  <form class="login px-5 w-40">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Correo Electónico</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        placeholder="ejemplo@ejm.com">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Contraseña</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="*******">
+    </div>
+    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+  </form>
+
   <div class="container-fluid h-100">
     <div class="row justify-content-center h-100">
       <div class="chat-box d-flex flex-row">
-        <div class="user-list bg-dark">
+        <div class="room-list bg-dark d-flex flex-column px-2">
           <ul class="list-group">
           </ul>
+          <input type="text" class="form-control add-room" placeholder="Nueva Sala" aria-label="Nueva Sala"
+            aria-describedby="basic-addon1">
         </div>
-        <div class="chat flex-fill">
-          <div class="message-container">
-            <div class="message-header">
-              <div class="message-name">
-                Nombre
+        <div class="chat-container d-flex flex-column justify-content-between flex-fill">
+          <div class="message-list">
+            <div class="message-item">
+              <div class="message-header">
+                <div class="message-name">
+                  Nombre
+                </div>
+                <div class="message-date">
+                  Fecha
+                </div>
               </div>
-              <div class="message-date">
-                Fecha
+              <div class="message-content">
+                Abajo
               </div>
-            </div>
-            <div class="message-content">
-              Abajo
             </div>
           </div>
+          <input room-id="" type="text" class="form-control add-message" placeholder="Nuevo Mensaje"
+            aria-label="Nuevo Mensaje" aria-describedby="basic-addon1">
         </div>
       </div>
     </div>
   </div>
 
   <!-- Handlebar User -->
-  <script id="user-template" type="text/x-handlebars-template">
-    <li user-id="{{id}}" class="{{status}} list-group-item d-flex flex-row text-white">
-      <div class="circle align-self-center mr-2"></div>
+  <script id="room-template" type="text/x-handlebars-template">
+    <li room-id="{{id}}" class="{{status}} list-group-item d-flex flex-row text-white">
       {{name}}
     </li>
   </script>
 
   <!-- Handlebar Message -->
   <script id="message-template" type="text/x-handlebars-template">
-    <div class="message-container">
-      <div class="message-header">
-        <div class="message-name">
-          {{name}}
+    <div class="message-item">
+      <div class="message-container">
+        <div class="message-header">
+          <div class="message-name">
+            {{sender}}
+          </div>
+          <div class="message-date">
+            {{date}}
+          </div>
         </div>
-        <div class="message-date">
-          {{date}}
+        <div class="message-content">
+          {{message}}
         </div>
-      </div>
-      <div class="message-content">
-        {{body}}
       </div>
     </div>
   </script>
