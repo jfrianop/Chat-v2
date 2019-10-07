@@ -53,6 +53,7 @@ const printMessages = e => {
 
 //Authentication
 var currentUser;
+var currentRoom;
 
 $("form").on("submit", function (e) {
     e.preventDefault();
@@ -111,7 +112,7 @@ $(".add-message").on("keypress", (e) => {
             .then(function (docRef) {
                 console.log("Document written with ID: ", docRef.id);
                 $(e.currentTarget).val("");
-                getMessages($(e.currentTarget).attr("room-id")).then(printMessages);
+                getMessages(currentRoom).then(printMessages);
             })
             .catch(function (error) {
                 console.error("Error adding document: ", error);
@@ -122,7 +123,14 @@ $(".add-message").on("keypress", (e) => {
 $(".room-list ul").on("click", "li", function () {
     $(".active").removeClass("active");
     $(this).addClass("active");
-    var id = $(this).attr("room-id");
-    $(".add-message").attr("room-id", id);
-    getMessages(id).then(printMessages)
+    currentRoom = $(this).attr("room-id");
+    $(".add-message").attr("room-id", currentRoom);
+    getMessages(currentRoom).then(printMessages)
 })
+
+db.collection("messages").onSnapshot(docSnapshot => {
+    console.log(`Messages Updated`);
+    getMessages(currentRoom).then(printMessages);
+}, err => {
+    console.log(`Encountered error: ${err}`);
+});
