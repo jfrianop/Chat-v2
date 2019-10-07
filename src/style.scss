@@ -11,31 +11,39 @@ html, body {
   max-width: 1270px;
   padding: 10px 0;
 }
-.user-list {
+.room-list {
   height: 100%;
   width: 270px;
   min-width: 270px;
 }
-.user-list .circle {
+.room-list .circle {
   width: 1em;
   height: 1em;
   border-radius: 50%;
   border: 2px solid grey;
 }
-.user-list .online .circle {
+.room-list .online .circle {
   background-color: green;
   border-color: green;
 }
-.user-list li{
+.room-list li{
   background-color: #343a40;
 }
-.user-list li.active{
+.room-list li.active{
   background-color: blue;
 }
-​.chat {
+.chat-container{
   min-width: 300px;
+  border: 1px solid grey;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
-.message-container{
+.message-list{
+  overflow-y: scroll;
+}
+
+.message-item{
   padding: 15px;
   border-bottom: 1px solid rgb(201, 199, 199);
 }
