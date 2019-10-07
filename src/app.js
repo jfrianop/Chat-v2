@@ -23,7 +23,6 @@ firebase.initializeApp(firebaseConfig);
 
 var db = firebase.firestore();
 
-
 const getMessages = (roomId) => {
     return db.collection("messages").where("room", "==", roomId).orderBy("date").get();
 }
@@ -52,6 +51,37 @@ const printMessages = e => {
     $('.message-list').animate({ scrollTop: 9999 }, 'slow');
 }
 
+//Authentication
+var currentUser;
+
+$("form").on("submit", function (e) {
+    e.preventDefault();
+
+    var email = $("#exampleInputEmail1").val();
+    var password = $("#exampleInputPassword1").val();
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .catch(function (error) {
+            console.log("Error code: ", error.code);
+            console.log("Error message:", error.message);
+            alert("Nombre de usuario o contraseña no válido.");
+        });
+});
+
+firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+        db.collection("users").doc(user.uid).get().then((e) => {
+            currentUser = e.data().username;
+            $(".login").hide();
+            $(".container-fluid").show();
+        })
+    } else {
+        $(".container-fluid").hide();
+        alert("Nombre de usuario o contraseña no válido.");
+    }
+});
+
+
 $(document).ready(printRooms);
 
 $(".add-room").on("keypress", (e) => {
@@ -74,7 +104,7 @@ $(".add-message").on("keypress", (e) => {
     if (e.which == 13) {
         db.collection("messages").add({
             message: $(e.currentTarget).val(),
-            sender: "Juan Riaño",
+            sender: currentUser,
             room: $(e.currentTarget).attr("room-id"),
             date: Date.now()
         })
